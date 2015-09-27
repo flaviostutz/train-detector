@@ -16,11 +16,15 @@ WIDTH=52
 HEIGHT=13
 COUNTRY='eu'
 
+#WIDTH=33
+#HEIGHT=11
+#COUNTRY='br'
+
 #constants
-OPENCV_DIR= '/home/mhill/projects/alpr/libraries/opencv/bin'
+OPENCV_DIR= '/usr/local/bin'
 SAMPLE_CREATOR = OPENCV_DIR + '/opencv_createsamples'
 
-BASE_DIR            = '/home/mhill/projects/alpr/samples/training/'
+BASE_DIR            = '/opt/train-detector/'
 
 OUTPUT_DIR          = BASE_DIR + "out/"
 INPUT_NEGATIVE_DIR  = BASE_DIR + 'raw-neg/'
@@ -169,9 +173,12 @@ elif command == "train":
 	num_pos_samples = -1
     num_neg_samples = file_len(NEGATIVE_INFO_FILE)
 
-    execStr = '%s/opencv_traincascade %s %s %s %s -numPos %d -numNeg %d -featureType LBP -numStages 20' % (OPENCV_DIR, data_arg, vector_arg, bg_arg, width_height_arg, num_pos_samples, num_neg_samples )
+    execStr = '%s/opencv_traincascade %s %s %s %s -minHitRate 0.99 -numThreads 4 -numPos %d -numNeg %d -featureType LBP -numStages 20' % (OPENCV_DIR, data_arg, vector_arg, bg_arg, width_height_arg, num_pos_samples, num_neg_samples )
 
     print "Execute the following command to start training:"
+    print "--Because of a known bug, execute the command inside 'negative' dir"
+    print "--On error, try to change numPos to 90% of number of positive samples"
+    print "--See: http://answers.opencv.org/question/776/error-in-parameter-of-traincascade/"
     print execStr
     #opencv_traincascade -data ./out/ -vec ./positive/vecfile.vec -bg ./negative/negative.txt -w 120 -h 60 -numPos 99 -numNeg 5  -featureType LBP -numStages 8
     #opencv_traincascade -data ./out/ -vec ./positive/vecfile.vec -bg ./negative/negative.txt -w 120 -h 60 -numPos 99 -numNeg 5  -featureType LBP -numStages 20
