@@ -52,9 +52,9 @@ int main(int argc, char *argv[]) {
     DetectRegions detectRegions;
     detectRegions.setFilename(filename_whithoutExt);
     detectRegions.saveRegions=false;
-    detectRegions.showSteps=true;
+    detectRegions.showSteps=false;
     vector<Plate> posible_regions= detectRegions.run( input_image );
-    printf("Plates detected: %zu", posible_regions.size());
+    printf("Plates detected: %zu\n\n", posible_regions.size());
 
     waitKey(0);
 

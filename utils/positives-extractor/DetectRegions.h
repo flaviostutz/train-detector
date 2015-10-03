@@ -43,6 +43,7 @@ class DetectRegions{
     private:
         vector<Plate> segment(Mat input);
         bool verifySizes(RotatedRect mr);
+        bool verifyLettersInside(Mat img, int qtty);
         Mat histeq(Mat in);
 };
 
