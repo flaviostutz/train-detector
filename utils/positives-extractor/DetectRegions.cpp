@@ -200,7 +200,7 @@ vector<Plate> DetectRegions::segment(Mat input) {
             //Equalize croped image
             Mat grayResult;
             cvtColor(resultResized, grayResult, CV_BGR2GRAY);
-            grayResult = histeq(grayResult);
+            //grayResult = histeq(grayResult);
         //            blur(grayResult, grayResult, Size(3,3));
         //            grayResult=histeq(grayResult);
 
@@ -348,8 +348,8 @@ bool DetectRegions::verifyPossibleLettersInside(Mat image) {
     }
   }
 
-  // sprintf(title, "Letters %d %d %d", image.rows, image.cols, totalWidth);
-  // imshow(title, img_work);
+  sprintf(title, "Letters %d %d %d", image.rows, image.cols, totalWidth);
+  imshow(title, img_work);
 
   //verify if letters with is normal
   if(totalWidth <= image.cols*0.90 && totalWidth >= image.cols*0.30) {
