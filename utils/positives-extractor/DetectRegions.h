@@ -1,7 +1,7 @@
 /*****************************************************************************
 *   Number Plate Recognition using SVM and Neural Networks
 ******************************************************************************
-*   by David Millán Escrivá, 5th Dec 2012
+*   by David Millï¿½n Escrivï¿½, 5th Dec 2012
 *   http://blog.damiles.com
 ******************************************************************************
 *   Ch5 of the book "Mastering OpenCV with Practical Computer Vision Projects"
@@ -43,7 +43,7 @@ class DetectRegions{
     private:
         vector<Plate> segment(Mat input);
         bool verifySizes(RotatedRect mr);
-        bool verifyLettersInside(Mat img, int qtty);
+        bool verifyPossibleLettersInside(Mat img);
         Mat histeq(Mat in);
 };
 

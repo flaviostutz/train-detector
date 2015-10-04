@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
     detectRegions.setFilename(filename_whithoutExt);
     detectRegions.saveRegions=false;
     detectRegions.showSteps=false;
-    vector<Plate> posible_regions= detectRegions.run( input_image );
-    printf("Plates detected: %zu\n\n", posible_regions.size());
+    vector<Plate> possible_regions= detectRegions.run(input_image);
+    printf("Plates detected: %zu\n\n", possible_regions.size());
 
     waitKey(0);
 
@@ -70,4 +70,3 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
-
