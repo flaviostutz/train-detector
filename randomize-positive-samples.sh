@@ -13,7 +13,7 @@ do
    fname=${filename%.*}
    posdir=positive/$fname
    echo "Processing $fname..."
-   opencv_createsamples -img $f -bg negative/negative.txt -info $posdir/positive.txt -num 5 -maxxangle 0.15 -maxyangle 0.15 -maxzangle 0.2 -w 125 -h 46 -bgcolor 255 -bgthresh 0
+   opencv_createsamples -img $f -bg negative/negative.txt -info $posdir/positive.txt -num 4 -maxxangle 0.15 -maxyangle 0.15 -maxzangle 0.07 -w 125 -h 46 -bgcolor 255 -bgthresh 0
    awk '{print "'"$fname"'/" $0}' $posdir/positive.txt >> positive/positive.txt
 done
 

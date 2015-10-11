@@ -16,8 +16,8 @@ import sys
 #HEIGHT=13
 #COUNTRY='eu'
 
-WIDTH=33
-HEIGHT=11
+WIDTH=125
+HEIGHT=46
 COUNTRY='br'
 
 #constants

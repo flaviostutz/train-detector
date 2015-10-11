@@ -1,0 +1,4 @@
+Used images from br
+prep-br.py neg
+prep-br.py pos
+opencv_traincascade -data /opt/train-detector/out// -vec /opt/train-detector/positive/vecfile.vec -bg /opt/train-detector/negative/negative.txt -w 125 -h 46 -minHitRate 0.99 -numThreads 4 -numPos 500 -numNeg 400 -featureType LBP -numStages 9
