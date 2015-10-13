@@ -1,0 +1,5 @@
+Used images from br, but randomized their rotation against random backgrounds
+prep-br.py neg
+prep-br.py pos
+randomize-positive-samples.sh (7 random images per sample)
+opencv_traincascade -data /opt/train-detector/out// -vec /opt/train-detector/positive/vecfile.vec -bg /opt/train-detector/negative/negative.txt -w 125 -h 46 -minHitRate 0.99 -numThreads 4 -numPos 3544 -numNeg 2748 -featureType LBP -numStages 19

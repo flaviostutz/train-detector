@@ -98,62 +98,7 @@ if command == "neg":
 
 elif command == "pos":
     print "Pos"
-    info_arg = '-info %s' % (POSITIVE_INFO_FILE)
-
-    # Copy all files in the raw directory and build an info file
-
-    ## Remove all files in the output positive directory
-    for old_file in os.listdir(OUTPUT_POSITIVE_DIR):
-        os.unlink(OUTPUT_POSITIVE_DIR + old_file)
-
-    ## First, prep the sample filenames (make sure they have no spaces)
-    for files in os.listdir(INPUT_POSITIVE_DIR):
-        if os.path.isdir(INPUT_POSITIVE_DIR + files):
-            continue
-
-        # Rename the file if it has a space in it
-        newfilename = files
-        if " " in files:
-            fileName, fileExtension = os.path.splitext(files)
-
-            newfilename =  str(uuid.uuid4()) + fileExtension
-            #print "renaming: " + files + " to "+ root_dir + "/" + str(uuid.uuid4()) + fileExtension
-            os.rename(INPUT_POSITIVE_DIR + files, INPUT_POSITIVE_DIR + newfilename)
-
-        # Copy from the raw directory to the positive directory
-        shutil.copy2(INPUT_POSITIVE_DIR + newfilename, OUTPUT_POSITIVE_DIR + newfilename )
-
-
-    total_pics = 0
-    ## Create the positive.txt input file
-    f = open(POSITIVE_INFO_FILE,'w')
-    for filename in os.listdir(OUTPUT_POSITIVE_DIR):
-        if os.path.isdir(OUTPUT_POSITIVE_DIR + filename):
-            continue
-
-        if filename.endswith(".txt"):
-            continue
-
-        img = Image.open(OUTPUT_POSITIVE_DIR + filename)
-
-        # get the image's width and height in pixels
-        width, height = img.size
-        f.write(filename + " 1 0 0 " + str(width) + " " + str(height) + '\n')
-
-        total_pics = total_pics + 1
-
-    f.close()
-
-
-
-
-    # Collapse the samples into a vector file
-    execStr = '%s/opencv_createsamples %s %s %s -num %d' % (OPENCV_DIR, vector_arg, width_height_arg, info_arg, total_pics )
-    print execStr
-
-    os.system(execStr)
-    #opencv_createsamples -info ./positive.txt -vec ../positive/vecfile.vec -w 120 -h 60 -bg ../negative/PentagonCityParkingGarage21.jpg -num 100
-
+    os.system("./prepare-positives.sh " + COUNTRY)
 
 elif command == "showpos":
     print "SHOW"
@@ -161,6 +106,7 @@ elif command == "showpos":
     print execStr
     os.system(execStr)
     #opencv_createsamples -vec ../positive/vecfile.vec -w 120 -h 60
+
 elif command == "train":
     print "TRAIN"
 
@@ -173,21 +119,20 @@ elif command == "train":
 	num_pos_samples = -1
     num_neg_samples = file_len(NEGATIVE_INFO_FILE)
 
-    execStr = '%s/opencv_traincascade %s %s %s %s -minHitRate 0.99 -numThreads 4 -numPos %d -numNeg %d -featureType LBP -numStages 20' % (OPENCV_DIR, data_arg, vector_arg, bg_arg, width_height_arg, num_pos_samples, num_neg_samples )
+    execStr = '%s/opencv_traincascade %s %s %s %s -minHitRate 0.99 -numThreads 4 -numPos %d -numNeg %d -featureType LBP -numStages 20' % (OPENCV_DIR, data_arg, vector_arg, bg_arg, width_height_arg, num_pos_samples * 0.85, num_neg_samples)
 
     print "Execute the following command to start training:"
     print "--Because of a known bug, execute the command inside 'negative' dir"
     print "--On error, try to change numPos to 90% of number of positive samples"
     print "--See: http://answers.opencv.org/question/776/error-in-parameter-of-traincascade/"
     print execStr
-    #opencv_traincascade -data ./out/ -vec ./positive/vecfile.vec -bg ./negative/negative.txt -w 120 -h 60 -numPos 99 -numNeg 5  -featureType LBP -numStages 8
-    #opencv_traincascade -data ./out/ -vec ./positive/vecfile.vec -bg ./negative/negative.txt -w 120 -h 60 -numPos 99 -numNeg 5  -featureType LBP -numStages 20
+
+    os.system("rm out/* -R && cd negative && " + execStr)
+
 elif command == "SDFLSDFSDFSDF":
 
     root_dir = '/home/mhill/projects/anpr/AlprPlus/samples/svm/raw-pos'
     outputfilename = "positive.txt"
-
-
 
 else:
     print_usage()
